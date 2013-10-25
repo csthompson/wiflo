@@ -1,0 +1,87 @@
+    <!doctype html>
+    <html lang="en" ng-app="myApp">
+    <head>
+        <meta name="viewport" content="width=device-width, initial-scale=1.0">
+        <!-- Bootstrap -->
+        <link rel="stylesheet" href="style/bootstrap/css/bootstrap.css">
+        <link rel="stylesheet" href="style/main.css">
+        <script src="http://code.jquery.com/jquery.js"></script>
+        <!--Libraries-->
+        <script type="text/javascript" src="libraries/angular/angular.js"></script>
+        <script type="text/javascript" src="libraries/pouchdb/pouch.min.js"></script>
+        <script type="text/javascript" src="libraries/crypto-js/sha3.js"></script>
+        <script src='https://cdn.firebase.com/v0/firebase.js'></script>
+        <script src='https://cdn.firebase.com/libs/angularfire/0.3.0/angularfire.min.js'></script>
+        <!-- Script to get IP-->
+        <script language="Javascript" src="http://www.codehelper.io/api/ips/?js"></script>
+    </head>
+    <body ng-controller="current_usersCtrl">
+        <center>
+            <br><br>
+            <div class="container">
+                <div class="login-page">
+                    <form name="loginForm" class="form-signin" ng-submit="logon()">
+                        <fieldset>
+                            <legend><img src="images/wiflo-logo.png" width="20%" height="20%"></legend>
+                            <br>
+                            <div class="input-block-level1">
+                                Name: <input type="text" ng-model="username" required/><br />
+                            </div>
+                            <div class="control-group">
+                                <input ng-disabled="loginForm.$invalid" class="btn btn-primary" type="submit" value="Join FloNet" />
+                            </div>
+                        </fieldset>
+                    </form>
+                </div>
+                <div style="display: none;" class="main-page">
+                    <div class="col-md-3">
+                        <table class="table table-hover">
+                              <thead>
+                                <tr>
+                                  <th>Current FloNet</th>
+                                  <th>&nbsp;</th>
+                                </tr>
+                              </thead>
+                              <tbody style="height: 200px; overflow: scroll;">
+                                <tr ng-repeat="user in users | filter:inBubble">
+                                  <td ng-style="color(user)">{{user.username}}{{user.lat}}</td>
+                                </tr>
+                              </tbody>
+                        </table>
+                    </div>
+                    <div id="flo-feed-area" ng-controller="feedCtrl" class="col-md-6">
+                        <div id="messagesDiv">
+                            <fieldset>
+                                <legend>Flo Feed</legend>
+                                <ul>
+                                    <div ng-repeat="post in posts | filter:'post'"><b>{{post.username}} : </b>{{post.message}}</br></div>
+                                </ul>
+                            </fieldset>
+                        </div> 
+                        <form class="form-post" ng-submit="post()">
+                            New Post: <input type="text" ng-model="text" /><br />
+                            <input class="btn btn-primary" type="submit" value="Post" />
+                        </form>
+                    </div>
+                </div>
+            </div>
+        </center>   
+    </body>
+        <script>
+            window.setInterval(function() {
+                var elem = document.getElementById('messagesDiv');
+                elem.scrollTop = elem.scrollHeight;
+            }, 1000);
+        </script>
+        <script>
+            var myApp = angular.module('myApp', []);
+        </script>
+        <!-- Shared resource service-->
+        <script type="text/javascript" src="js/shared.js"></script>
+        <!--Geo location service-->
+        <script type="text/javascript" src="js/geo.js"></script>
+        <!--User Management-->
+        <script type="text/javascript" src="js/user.js"></script>
+        <!--Feed Management-->
+        <script type="text/javascript" src="js/feed.js"></script>
+    </html>

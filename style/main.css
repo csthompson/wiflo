@@ -1,0 +1,10 @@
+/* Chat */
+#messagesDiv {
+  background-color: white;
+  overflow: auto;
+  height: 230px;
+  padding: 10px;
+  border: 1px solid #424547;
+  margin-bottom: 5px;
+  text-align: left;
+}
